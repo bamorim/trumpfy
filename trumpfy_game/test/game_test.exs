@@ -2,6 +2,7 @@ defmodule GameTest do
   use ExUnit.Case
   alias TrumpfyGame.{Game}
   alias Game.{Card}
+  import TrumpfyGame.Helpers
 
   test "deal" do
     hand = (1..5) |> Enum.to_list 
@@ -30,24 +31,5 @@ defmodule GameTest do
     {game,_} = game |> Game.play(1)
     assert Game.finished(game) == true
     assert Game.winner(game) == 0
-  end
-
-  def make_cards(attribute_count) do
-    (1..attribute_count)
-    |> Enum.map( &(make_card(&1, attribute_count)) )
-  end
-
-  def make_card(winning_at, attribute_count) do
-    %Card{
-      id: winning_at,
-      attributes: (1..attribute_count)
-        |> Enum.map(fn i ->
-          if i == winning_at do
-            1
-          else
-            0
-          end
-        end)
-    }
   end
 end

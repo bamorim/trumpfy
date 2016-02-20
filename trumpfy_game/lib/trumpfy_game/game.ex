@@ -66,6 +66,12 @@ defmodule TrumpfyGame.Game do
     end
   end
 
+  def playing_cards(game) do
+    playing_cards =
+      game
+      |> Enum.map( &List.first/1 )
+  end
+
   @doc """
   Given a game G and a attribute A, play one round.
   The player who have the top card with the highest value o A wins.
@@ -83,12 +89,9 @@ defmodule TrumpfyGame.Game do
   end
 
   defp round_winner(game, attribute) do
-    playing_cards =
-      game
-      |> Enum.map( &List.first/1 )
-
     {_cards, winner} =
-      playing_cards
+      game
+      |> playing_cards
       |> Stream.with_index
       |> Enum.filter( fn {card,_} -> card != nil end )
       |> Enum.max_by( fn {card,_} -> Card.value(card,attribute) end )
