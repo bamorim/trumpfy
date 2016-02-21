@@ -39,7 +39,13 @@ defmodule TrumpfyGame.Room.Server do
     end
   end
   def handle_call({:add_player, player}, _from, room) do
-    room = %Room{room | players: room.players ++ [player]}
+    players = if room.players |> Enum.member?(player) do
+      room.players
+    else
+      room.players ++ [player]
+    end
+
+    room = %Room{room | players: players}
     {:reply, {:ok, room.players}, room}
   end
   def handle_call({:remove_player, player}, _from, room) do
