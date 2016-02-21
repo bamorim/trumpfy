@@ -1,6 +1,6 @@
-defmodule TrumpfyGame.Server do
+defmodule TrumpfyGame.RoomServer do
   @moduledoc """
-  The game server holds the total state of the game, such as
+  The room game server holds the total state of the game, such as
   the currently playing player, an external player identification
   and also the game itself
   """
@@ -11,9 +11,12 @@ defmodule TrumpfyGame.Server do
 
   # Public API
 
-  def start(players, deck) do
-    game = Game.new(deck, length(players))
-    GenServer.start(__MODULE__, {players, game, 0})
+  def start(deck, players) do
+    GenServer.start(__MODULE__, {deck, players})
+  end
+
+  def start_link(state, opts \\ []) do
+    GenServer.start_link(__MODULE__, state, opts)
   end
 
   def play(pid, player, attribute) do
@@ -30,15 +33,16 @@ defmodule TrumpfyGame.Server do
 
   # GenServer API
 
-  def handle_call({:play, player, attribute}, _from, state={players, game, curr}) do
+  def init({deck, players}) do
+    game = Game.new(deck, length(players))
+    {:ok, {players, game, 0}}
+  end
+
+  def handle_call({:play, player, attribute}, _from, state={players, _game, curr}) do
     if Enum.at(players, curr) != player do
       {:reply, {:error, :not_this_player_turn}, state}
     else
-      if Game.finished(game) do
-        {:reply, {:error, :game_already_finished}, state}
-      else
-        handle_play(attribute, state)
-      end
+      handle_play(attribute, state)
     end
   end
   def handle_call(:hands, _from, state), do: {:reply, get_hands(state), state}
@@ -48,7 +52,7 @@ defmodule TrumpfyGame.Server do
     players |> Enum.zip(game) |> Enum.into(%{})
   end
 
-  defp handle_play(attribute, state={players, game, curr}) do
+  defp handle_play(attribute, {players, game, _curr}) do
     {newGame, winner_id} = game
     |> Game.play(attribute)
 
@@ -62,6 +66,10 @@ defmodule TrumpfyGame.Server do
     reply = {winner, won_cards}
     newState = {players, newGame, winner_id}
 
-    {:reply, {:ok, reply}, newState}
+    if Game.finished(newGame) do
+      {:stop, :normal, {:ok, :game_finished}, newState}
+    else
+      {:reply, {:ok, reply}, newState}
+    end
   end
 end
