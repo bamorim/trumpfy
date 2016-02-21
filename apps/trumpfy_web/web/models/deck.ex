@@ -8,6 +8,8 @@ defmodule TrumpfyWeb.Deck do
     field :attribute_name3, :string
     field :attribute_name4, :string
 
+    has_many :cards, TrumpfyWeb.Card
+
     timestamps
   end
 

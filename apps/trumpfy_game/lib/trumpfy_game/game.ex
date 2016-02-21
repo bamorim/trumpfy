@@ -1,14 +1,5 @@
 defmodule TrumpfyGame.Game do
-  defmodule Card do
-    @moduledoc """
-    A card is a list of attributes and an external identifier
-    """
-    defstruct id: nil, attributes: []
-
-    def value(card, attribute) do
-      card.attributes |> Enum.at(attribute)
-    end
-  end
+  alias TrumpfyGame.Card
 
   @moduledoc """
   A game of N players is an array of N hands
@@ -94,7 +85,7 @@ defmodule TrumpfyGame.Game do
       |> playing_cards
       |> Stream.with_index
       |> Enum.filter( fn {card,_} -> card != nil end )
-      |> Enum.max_by( fn {card,_} -> Card.value(card,attribute) end )
+      |> Enum.max_by( fn {card,_} -> Card.attribute_value(card,attribute) end )
 
     winner
   end

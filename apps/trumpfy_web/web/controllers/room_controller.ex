@@ -10,8 +10,11 @@ defmodule TrumpfyWeb.RoomController do
   end
 
   def create(conn, %{"deck_id" => deck_id}) do
-    deck = TrumpfyGame.Helpers.create_random_cards(4,40)
-    {:ok, room_id, _pid} = TrumpfyGame.Room.create_game(deck)
+    card_query = from c in TrumpfyWeb.Card,
+                 where: c.deck_id == ^deck_id
+
+    cards = Repo.all(card_query)
+    {:ok, room_id, _pid} = TrumpfyGame.Room.create_game()
     conn
     |> redirect(to: room_path(conn, :show, room_id))
   end

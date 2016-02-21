@@ -1,5 +1,5 @@
 defmodule TrumpfyGame.Helpers do
-  alias TrumpfyGame.Game.Card
+  alias TrumpfyGame.BasicCard
 
   def make_random_cards(attribute_count, card_count) do
     (1..card_count)
@@ -7,8 +7,7 @@ defmodule TrumpfyGame.Helpers do
   end
 
   def make_random_card(id, attribute_count) do
-    %Card{
-      id: id,
+    %BasicCard{
       attributes: (1..attribute_count) 
         |> Enum.map( fn _ -> :rand.uniform(100) end )
     }
@@ -20,8 +19,7 @@ defmodule TrumpfyGame.Helpers do
   end
 
   def make_card(winning_at, attribute_count) do
-    %Card{
-      id: winning_at,
+    %BasicCard{
       attributes: (1..attribute_count)
         |> Enum.map(fn i ->
           if i == winning_at do

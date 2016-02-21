@@ -27,3 +27,12 @@ defmodule TrumpfyWeb.Card do
     |> cast(params, @required_fields, @optional_fields)
   end
 end
+
+defimpl TrumpfyGame.Card, for: TrumpfyWeb.Card do
+  def attribute_count(card), do: 4
+
+  def attribute_value(card,1), do: card.attribute1
+  def attribute_value(card,2), do: card.attribute2
+  def attribute_value(card,3), do: card.attribute3
+  def attribute_value(card,4), do: card.attribute4
+end

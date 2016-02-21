@@ -5,52 +5,61 @@ defmodule TrumpfyGame.Room.Server do
 
   # Supervisor API
 
-  def start_link(state, opts \\ []) do
-    GenServer.start_link(__MODULE__, state, opts)
+  def start_link(room, opts \\ []) do
+    GenServer.start_link(__MODULE__, room, opts)
   end
 
   # GenServer API
 
   def init(room) do
-    game = Game.new(room.deck, length(room.players))
     Room.Listing.set(room.id, self)
-
-    room = %Room{room | game: game}
     {:ok, room}
   end
 
-  def handle_call({:play, player, attribute}, _from, state) when is_integer(attribute) do
-    if Enum.at(state.players, state.curr) != player do
-      {:reply, {:error, :not_this_player_turn}, state}
-    else
-      handle_play(attribute, state)
+  def handle_call({:play, player, attribute}, _from, room) when is_integer(attribute) do
+    cond do
+      Room.pending?(room) ->
+        {:reply, {:error, :game_not_ready}, room}
+      Enum.at(room.players, room.curr) != player ->
+        {:reply, {:error, :not_this_player_turn}, room}
+      true ->
+        do_play(attribute, room)
     end
   end
-  def handle_call(:hands, _from, state), do: {:reply, get_hands(state), state}
-  def handle_call(:current_player, _from, state), do: {:reply, Enum.at(state.players,state.curr), state}
-
-  defp get_hands(state) do
-    state.players |> Enum.zip(state.game) |> Enum.into(%{})
+  def handle_call(:get, _from, room), do: room
+  def handle_call(:new_game, _from, room) do
+    if Room.pending?(room) do
+      nplayers = length(room.players)
+      game = Game.new(room.deck, nplayers)
+      curr = :rand.uniform(nplayers) - 1
+      room = %Room{room | game: game, curr: curr}
+      {:reply, {:ok, room}, room}
+    else
+      {:reply, {:error, :game_currently_running}, room}
+    end
+  end
+  def handle_call({:add_player, player}, _from, room) do
+    room = %Room{room | players: room.players ++ [player]}
+    {:reply, {:ok, room.players}, room}
+  end
+  def handle_call({:remove_player, player}, _from, room) do
+    {:reply, {:error, :not_implemented_yet}, room}
   end
 
-  defp handle_play(attribute, state) do
-    {newGame, winner_id} = state.game
+  defp do_play(attribute, room) do
+    {newGame, winner_id} = room.game
     |> Game.play(attribute)
 
-    won_cards = state.game
+    won_cards = room.game
       |> Stream.with_index
-      |> Enum.map( fn {x,i} -> {state.players |> Enum.at(i), List.first(x)} end )
+      |> Enum.map( fn {x,i} -> {room.players |> Enum.at(i), List.first(x)} end )
       |> Enum.into(%{})
 
-    winner = state.players |> Enum.at(winner_id)
+    winner = room.players |> Enum.at(winner_id)
 
     reply = {winner, won_cards}
-    newState = %Room{ state | game: newGame, curr: winner_id }
+    newState = %Room{ room | game: newGame, curr: winner_id }
 
-    if Game.finished(newGame) do
-      {:stop, :normal, {:ok, :game_finished}, newState}
-    else
-      {:reply, {:ok, reply}, newState}
-    end
+    {:reply, {:ok, reply}, newState}
   end
 end

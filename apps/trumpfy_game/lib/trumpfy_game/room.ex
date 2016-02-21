@@ -12,15 +12,27 @@ defmodule TrumpfyGame.Room do
     {:ok, room_id, pid}
   end
 
-  def play(rid, players, attrs), do: call_room(rid, {:play, players, attrs})
+  # Stateful actions
+
+  def play(rid, players, attrs), do: call_server(rid, {:play, players, attrs})
+
+  def get(rid), do: call_server(rid, :get)
+
+  def add_player(rid, player), do: call_server(rid, {:add_player, player})
+
+  def new_game(rid), do: call_server(rid, :new_game)
 
   # Room transformation
 
-  def hands(rid), do: call_room(rid, :hands)
+  def ready?(room), do: not pending?(room)
 
-  def current_player(rid), do: call_room(rid, :current_player)
+  def pending?(room), do: is_nil(room.game) || Game.finished?(room)
 
-  defp call_room(room_id, msg) do
+  def current_player(room), do: room.curr |> Enum.at(room.players)
+
+  # Helpers
+
+  defp call_server(room_id, msg) do
     pid = Room.Listing.get(room_id)
     if room_id do
       GenServer.call(pid, msg)
