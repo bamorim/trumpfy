@@ -9,7 +9,7 @@ use Mix.Config
 config :trumpfy_web, TrumpfyWeb.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
-  secret_key_base: "LUmfA84LpHWFphdahuk4q38xp2zRa4u3UEDox0Kj1pHGC6c0lUp+Hf25U/3gbNrS",
+  secret_key_base: "Qq8uY/+cfyNG5WKKYqPPIGcDs6Sdz+PRB3eo2e9WRV6Xyu4hTYZXlpR6DM/mNfD0",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: TrumpfyWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]

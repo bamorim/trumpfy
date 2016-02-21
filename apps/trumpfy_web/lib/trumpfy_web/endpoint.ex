@@ -33,7 +33,7 @@ defmodule TrumpfyWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_trumpfy_web_key",
-    signing_salt: "3DwYGgjm"
+    signing_salt: "1faL+c47"
 
   plug TrumpfyWeb.Router
 end

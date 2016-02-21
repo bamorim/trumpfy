@@ -4,6 +4,8 @@ defmodule TrumpfyWeb.Mixfile do
   def project do
     [app: :trumpfy_web,
      version: "0.0.1",
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
@@ -31,7 +33,6 @@ defmodule TrumpfyWeb.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [{:phoenix, "~> 1.0.3"},
-     {:trumpfy_game, in_umbrella: true},
      {:phoenix_ecto, "~> 1.1"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.1"},
