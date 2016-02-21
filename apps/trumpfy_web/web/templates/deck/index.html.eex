@@ -25,6 +25,7 @@
         <%= link "Show", to: deck_path(@conn, :show, deck), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: deck_path(@conn, :edit, deck), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: deck_path(@conn, :delete, deck), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= render "create_room.html", deck_id: deck.id, conn: @conn %>
       </td>
     </tr>
 <% end %>

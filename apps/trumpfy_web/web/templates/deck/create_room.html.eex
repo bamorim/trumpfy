@@ -1,0 +1,6 @@
+<%= form_for @conn, room_path(@conn, :create), [name: :room], fn f -> %>
+  <%= hidden_input :room, :deck_id, value: @deck_id %>
+  <div class="form-group">
+    <%= submit "Create Room", class: "btn btn-primary" %>
+  </div>
+<% end %>
