@@ -1,4 +1,4 @@
-defmodule TrumpfyGame.GameServer do
+defmodule TrumpfyGame.Room.Supervisor do
   @moduledoc """
   This application supervises and manages all the room servers
   """
@@ -13,7 +13,7 @@ defmodule TrumpfyGame.GameServer do
     children = [
       # Don't know what restart: :transient does
       # Just copying from the docs
-      worker(TrumpfyGame.RoomServer, [], restart: :transient)
+      worker(TrumpfyGame.Room.Server, [], restart: :transient)
     ]
 
     supervise(children, strategy: :simple_one_for_one)
@@ -22,7 +22,7 @@ defmodule TrumpfyGame.GameServer do
   @doc """
   Create a new game and returns a pid
   """
-  def create_game(deck, players) do
-    Supervisor.start_child(__MODULE__, [{deck, players},[]])
+  def create_room(room) do
+    Supervisor.start_child(__MODULE__, [room,[]])
   end
 end

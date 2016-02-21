@@ -2,11 +2,11 @@ defmodule TrumpfyWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", TrumpfyWeb.RoomChannel
+  channel "rooms:*", TrumpfyWeb.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
+  transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -19,7 +19,8 @@ defmodule TrumpfyWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
+  def connect(%{"userGuid" => user_guid}, socket) do
+    socket = assign(socket, :user_guid, user_guid)
     {:ok, socket}
   end
 

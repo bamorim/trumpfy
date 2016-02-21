@@ -9,6 +9,7 @@
 
     <title>Trumpfy</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script>window.userGuid = "<%= Plug.Conn.get_session(@conn, :user_guid) %>"</script>
   </head>
 
   <body>

@@ -5,7 +5,8 @@ defmodule TrumpfyGame do
     import Supervisor.Spec, warn: false
 
     children = [
-      supervisor(TrumpfyGame.GameServer, [])
+      supervisor(TrumpfyGame.Room.Supervisor, []),
+      worker(TrumpfyGame.Room.Listing, [])
     ]
 
     opts = [strategy: :one_for_one, name: TrumpfyGame.Supervisor]
