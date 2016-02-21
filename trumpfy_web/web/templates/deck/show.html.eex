@@ -1,0 +1,33 @@
+<h2>Show deck</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @deck.name %>
+  </li>
+
+  <li>
+    <strong>Attribute name1:</strong>
+    <%= @deck.attribute_name1 %>
+  </li>
+
+  <li>
+    <strong>Attribute name2:</strong>
+    <%= @deck.attribute_name2 %>
+  </li>
+
+  <li>
+    <strong>Attribute name3:</strong>
+    <%= @deck.attribute_name3 %>
+  </li>
+
+  <li>
+    <strong>Attribute name4:</strong>
+    <%= @deck.attribute_name4 %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: deck_path(@conn, :edit, @deck) %>
+<%= link "Back", to: deck_path(@conn, :index) %>

@@ -1,0 +1,36 @@
+<h2>Listing cards for deck <%= @deck.name %></h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image url</th>
+      <th>Attribute1</th>
+      <th>Attribute2</th>
+      <th>Attribute3</th>
+      <th>Attribute4</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for card <- @cards do %>
+    <tr>
+      <td><%= card.name %></td>
+      <td><img src="<%= card.image_url %>"/></td>
+      <td><%= card.attribute1 %></td>
+      <td><%= card.attribute2 %></td>
+      <td><%= card.attribute3 %></td>
+      <td><%= card.attribute4 %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: card_path(@conn, :show, card), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: card_path(@conn, :edit, card), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: card_path(@conn, :delete, card), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New card", to: deck_card_path(@conn, :new, @deck.id) %>

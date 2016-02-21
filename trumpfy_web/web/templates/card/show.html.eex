@@ -1,0 +1,43 @@
+<h2>Show card</h2>
+
+<ul>
+
+  <li>
+    <strong>Deck:</strong>
+    <%= @card.deck %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @card.name %>
+  </li>
+
+  <li>
+    <strong>Image url:</strong>
+    <%= @card.image_url %>
+  </li>
+
+  <li>
+    <strong>Attribute1:</strong>
+    <%= @card.attribute1 %>
+  </li>
+
+  <li>
+    <strong>Attribute2:</strong>
+    <%= @card.attribute2 %>
+  </li>
+
+  <li>
+    <strong>Attribute3:</strong>
+    <%= @card.attribute3 %>
+  </li>
+
+  <li>
+    <strong>Attribute4:</strong>
+    <%= @card.attribute4 %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: card_path(@conn, :edit, @card) %>
+<%= link "Back", to: deck_card_path(@conn, 1, :index) %>
