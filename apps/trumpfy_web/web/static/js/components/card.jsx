@@ -45,25 +45,25 @@ class Card extends React.Component {
               <g id="Feature_01_9_" onClick={() => this.props.onPlay(1)}>
                 <path fill="#F2F2F2" d="M221.9,267.4H29.1c-4.6,0-8.4-3.8-8.4-8.4V252c0-4.6,3.8-8.4,8.4-8.4h192.8c4.6,0,8.4,3.8,8.4,8.4v7.1
                   C230.3,263.7,226.6,267.4,221.9,267.4z"/>
-                <text transform="matrix(1 0 0 1 29.2233 259.867)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">Feature 01</text>
+                <text transform="matrix(1 0 0 1 29.2233 259.867)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">{ window.deck.attribute_name1 }</text>
                 <text transform="matrix(1 0 0 1 198.8322 259.867)" fontFamily="'MyriadPro-Regular'" fontSize="12px">{card.attribute1}</text>
               </g>
               <g id="Feature_02_4_" onClick={() => this.props.onPlay(2)}>
                 <path fill="#F2F2F2" d="M221.9,305.8H29.1c-4.6,0-8.4-3.8-8.4-8.4v-7.1c0-4.6,3.8-8.4,8.4-8.4h192.8c4.6,0,8.4,3.8,8.4,8.4v7.1
                   C230.3,302,226.6,305.8,221.9,305.8z"/>
-                <text transform="matrix(1 0 0 1 29.2233 298.2049)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">Feature 02</text>
+                <text transform="matrix(1 0 0 1 29.2233 298.2049)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">{ window.deck.attribute_name2 }</text>
                 <text transform="matrix(1 0 0 1 198.8322 298.2049)" fontFamily="'MyriadPro-Regular'" fontSize="12px">{card.attribute2}</text>
               </g>
               <g id="Feature_03_4_" onClick={() => this.props.onPlay(3)}>
                 <path fill="#F2F2F2" d="M221.9,344.2H29.1c-4.6,0-8.4-3.8-8.4-8.4v-7.1c0-4.6,3.8-8.4,8.4-8.4h192.8c4.6,0,8.4,3.8,8.4,8.4v7.1
                   C230.3,340.4,226.6,344.2,221.9,344.2z"/>
-                <text transform="matrix(1 0 0 1 29.2233 336.5428)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">Feature 03</text>
+                <text transform="matrix(1 0 0 1 29.2233 336.5428)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">{ window.deck.attribute_name3 }</text>
                 <text transform="matrix(1 0 0 1 198.8322 336.5428)" fontFamily="'MyriadPro-Regular'" fontSize="12px">{card.attribute3}</text>
               </g>
               <g id="Feature_04" onClick={() => this.props.onPlay(4)}>
                 <path fill="#F2F2F2" d="M221.9,382.5H29.1c-4.6,0-8.4-3.8-8.4-8.4V367c0-4.6,3.8-8.4,8.4-8.4h192.8c4.6,0,8.4,3.8,8.4,8.4v7.1
                   C230.3,378.7,226.6,382.5,221.9,382.5z"/>
-                <text transform="matrix(1 0 0 1 29.2233 373.867)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">Feature 04</text>
+                <text transform="matrix(1 0 0 1 29.2233 373.867)" fill="#333333" fontFamily="'MyriadPro-Regular'" fontSize="12px">{ window.deck.attribute_name4 }</text>
                 <text transform="matrix(1 0 0 1 198.8322 373.867)" fontFamily="'MyriadPro-Regular'" fontSize="12px">{card.attribute4}</text>
               </g>
             </g>

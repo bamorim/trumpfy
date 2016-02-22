@@ -7,9 +7,14 @@ defmodule TrumpfyWeb.RoomController do
   end
 
   def show(conn, %{"id" => room_id}) do
-    room = TrumpfyGame.Room.get room_id
+    room_id = room_id |> String.upcase
+    if TrumpfyGame.Room.room_alive?(room_id) do
+      room = TrumpfyGame.Room.get room_id
 
-    render conn, "show.html", room: room
+      render conn, "show.html", room: room
+    else
+      conn |> redirect(to: deck_path(conn, :index))
+    end
   end
 
   def create(conn, %{"room" => %{"deck_id" => deck_id}}) do

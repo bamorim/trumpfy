@@ -1,5 +1,30 @@
 <h2>Listing decks</h2>
 
+<div class="alert alert-info" role="alert">
+  <p>
+  This project consists in creating your own Trump deck (similar to Top Trumps) and then being able to play with it against your friends<br/>
+  After you have your deck done you just need to click on Create Room and then ask your friends to join the room code you are given (or just share the same url you endup in)
+  </p>
+  <p>
+    We could not finish everything we wanted, so here is the list of missing things:
+    <ul>
+      <li>Animations</li>
+      <li>Win/Lose/Tie Round and Game Messages</li>
+      <li><b>Bug</b>When a player leaves the room we are not doing anything</li>
+      <li><b>Bug</b>Not checking for more than 6 players, this can lead to trouble</li>
+    </ul>
+  </p>
+</div>
+
+<div>
+	<div class="input-group">
+			<input class="form-control room-code" type="text" placeholder="ROOM CODE"/>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="goToRoom()">Join Room</button>
+      </span>
+	</div>
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -22,9 +47,7 @@
       <td><%= deck.attribute_name4 %></td>
 
       <td class="text-right">
-        <%= link "Show", to: deck_path(@conn, :show, deck), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: deck_path(@conn, :edit, deck), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: deck_path(@conn, :delete, deck), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "View Cards", to: deck_card_path(@conn, :index, deck), class: "btn btn-default btn-xs" %>
         <%= render "create_room.html", deck_id: deck.id, conn: @conn %>
       </td>
     </tr>

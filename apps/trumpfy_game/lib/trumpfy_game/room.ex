@@ -17,6 +17,13 @@ defmodule TrumpfyGame.Room do
   def play(rid, players, attrs), do: call_server(rid, {:play, players, attrs})
 
   def get(rid), do: call_server(rid, :get)
+  
+  def room_alive?(room_id) do
+    case Room.Listing.get(room_id) do
+      nil -> false
+      pid -> Process.alive?(pid)
+    end
+  end
 
   def add_player(rid, player), do: call_server(rid, {:add_player, player})
 

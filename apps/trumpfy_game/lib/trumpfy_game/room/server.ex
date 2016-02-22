@@ -30,10 +30,14 @@ defmodule TrumpfyGame.Room.Server do
   def handle_call(:new_game, _from, room) do
     if Room.pending?(room) do
       nplayers = length(room.players)
-      game = Game.new(room.deck, nplayers)
-      curr = :rand.uniform(nplayers) - 1
-      room = %Room{room | game: game, curr: curr}
-      {:reply, {:ok, room}, room}
+      if(nplayers > 1) do
+        game = Game.new(room.deck, nplayers)
+        curr = :rand.uniform(nplayers) - 1
+        room = %Room{room | game: game, curr: curr}
+        {:reply, {:ok, room}, room}
+      else
+        {:reply, {:error, :not_enough_players}, room}
+      end
     else
       {:reply, {:error, :game_currently_running}, room}
     end

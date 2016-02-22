@@ -10,3 +10,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     React.render(<Game roomId={room_id}/>, gameDiv);
   });
 });
+
+window.goToRoom = function goToRoom(){
+	var code = document.querySelector('.room-code').value;
+	if(code && code.length > 0)
+		window.location.pathname='/rooms/'+code;
+}
