@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 166.3 43.8" style="enable-background:new 0 0 166.3 43.8;" xml:space="preserve">
+<g id="Inactive_x5F_Player">
+	<g>
+		<polygon style="fill:#333333;" points="149,38.9 18.9,38.9 18.9,16.7 166.3,16.7 		"/>
+		<polygon style="fill:#808080;" points="148,33 18.9,33 18.9,10.7 166.3,10.7 		"/>
+	</g>
+	<g id="Logo_Frame_5_">
+		<path style="fill:#1A1A1A;" d="M21.9,43.3c-11.8,0-21.4-9.6-21.4-21.4S10.1,0.5,21.9,0.5s21.4,9.6,21.4,21.4S33.7,43.3,21.9,43.3z
+			"/>
+		<path d="M21.9,1c11.5,0,20.9,9.4,20.9,20.9s-9.4,20.9-20.9,20.9S1,33.4,1,21.9S10.4,1,21.9,1 M21.9,0C9.8,0,0,9.8,0,21.9
+			s9.8,21.9,21.9,21.9S43.8,34,43.8,21.9S34,0,21.9,0L21.9,0z"/>
+	</g>
+	<radialGradient id="Logo_Place_2_" cx="20.4069" cy="17.9511" r="18.4871" gradientUnits="userSpaceOnUse">
+		<stop  offset="1.477833e-002" style="stop-color:#FFFFFF"/>
+		<stop  offset="0.4187" style="stop-color:#ABABAB"/>
+		<stop  offset="0.5529" style="stop-color:#A7A7A7"/>
+		<stop  offset="0.6919" style="stop-color:#9A9A9A"/>
+		<stop  offset="0.8332" style="stop-color:#868686"/>
+		<stop  offset="0.9752" style="stop-color:#696969"/>
+		<stop  offset="1" style="stop-color:#636363"/>
+	</radialGradient>
+	<circle id="Logo_Place_4_" style="fill:url(#Logo_Place_2_);" cx="21.9" cy="21.9" r="18.5"/>
+</g>
+</svg>

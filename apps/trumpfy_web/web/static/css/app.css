@@ -70,3 +70,8 @@ form.link, form.button {
     border-bottom: 0;
   }
 }
+
+.new-game-btn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}

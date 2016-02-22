@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./card.jsx";
+import PlayerTag from "./player_tag.jsx";
 import vp from "../viewport.js"
 let { getData, viewport, sc } = vp;
 
@@ -19,13 +20,16 @@ class FoePlace extends React.Component {
       left: `${x}px`,
       width: `${width}px`
     }
+
+    let cardCount = (this.props.hand && this.props.hand.card_count) || 0;
+
     return <div style={style}>
-      { (this.props.name && this.props.hand && this.props.hand.card_count > 0) ? [
-          <image src="/images/Card_final_R.svg"/>,
-          this.props.hand.card_count,
-          this.props.name 
+      { (this.props.name) ? [
+          ( cardCount > 0 ) ? <image src="/images/Card_final_R.svg"/> : <image src="/images/Inactive_Card_Back_R.svg"/>,
+          <PlayerTag name={this.props.name} count={cardCount}/>
         ] : [
-          <image src="/images/Inactive_Card_Back_R.svg"/>
+          <image src="/images/Inactive_Card_Back_R.svg"/>,
+          <image src="/images/Inactive_Player_Tag_R.svg"/>
         ]
       }
     </div>
@@ -57,13 +61,15 @@ class Room extends React.Component {
     return <div style={outerStyle}>
       <div style={boardStyle}>
         {this.renderUserSpots()}
-        {this.renderInner()}
+        {this.renderPlaying()}
+        {this.props.room.pending ? this.renderPending() : ""}
       </div>
     </div>;
   }
 
   getFoes(){
     let { players, hands } = this.props.room;
+    console.log(this.props);
 
     let id = this.props.room.your_id;
     let all = [0,1,2,3,4,5,6]
@@ -71,7 +77,7 @@ class Room extends React.Component {
 
     return getData()
     .foe_places
-    .map(({x,y}, i) => ({x,y, hand: hands[sliced[i]], name: players[sliced[i]]}))
+    .map(({x,y}, i) => ({x,y, hand: hands && hands[sliced[i]], name: players[sliced[i]]}))
   }
 
   renderUserSpots(){
@@ -83,32 +89,39 @@ class Room extends React.Component {
     </div>)
   }
 
-  renderInner(){
-    let { room } = this.props;
+  renderPending(){
+    let style = {
+      width: `${sc(150)}px`,
+      left: `${sc(760)}px`,
+      top: `${sc(670)}px`,
+      position: 'absolute',
 
-    if(room.pending){
-      return this.renderPending();
     }
 
-    return this.renderPlaying();
-  }
-
-  renderPending(){
-    return [
-      <button onClick={this.props.onNewGame}>New Game</button>
-    ];
+    return <img src="/images/Start_btn_R.svg" style={style} onClick={this.props.onNewGame} className="new-game-btn"/>;
   }
 
   renderPlaying(){
-    let { players, your_turn, current_player, hands, curr, your_id } = this.props.room;
+    var { players, your_turn, current_player, hands, curr, your_id } = this.props.room;
+    hands = hands || []
 
-    let yourCard = hands[your_id].top_card;
+    let yourCard = hands[your_id] && hands[your_id].top_card;
     let onPlay = your_turn ? ((a) => this.props.onPlay(a)) : (()=>{})
 
-    return [
-      your_turn ? "Choose the card attribute" : `${current_player} is choosing`,
-      <Card card={yourCard} onPlay={onPlay} width={sc(251)} height={sc(411)} x={sc(709)} y={sc(159)}/>
-    ];
+    var myCard;
+    if(yourCard){
+      myCard = <Card card={yourCard} onPlay={onPlay} width={sc(251)}/>;
+    } else {
+      myCard = <img src="/images/Inactive_Card_Back_R.svg" width={`${sc(251)}px`}/>;
+    }
+
+
+    let myDiv = <div style={ { position: "absolute", top: `${sc(159)}px`, left: `${sc(709)}px` } }>
+      { myCard }
+      <PlayerTag name={players[your_id]} count={hand_count(hands[your_id])}/>
+    </div>;
+
+    return myDiv;
   }
 }
 

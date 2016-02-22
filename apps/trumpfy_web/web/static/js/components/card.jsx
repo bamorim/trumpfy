@@ -2,7 +2,8 @@ import React from "react";
 
 class Card extends React.Component {
   render() {
-    var {height, width, x, y} = this.props;
+    var {width, x, y} = this.props;
+    var height = width*411/251;
 
     let { card } = this.props;
     let imgStyle = {
@@ -16,7 +17,7 @@ class Card extends React.Component {
     };
 
     return (
-      <div style={ { position: "absolute", height, width, left: x, top: y } }>
+      <div style={ { position: "relative", height, width, left: x, top: y } }>
         <div style={ imgStyle }/>
         <svg style={ { position: "absolute" } } version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           viewBox="0 0 251 411" enableBackground="new 0 0 251 411" xmlSpace="preserve">

@@ -1,4 +1,4 @@
 <h1>Ola</h1>
 
-<div class="game-component" data-room-id="<%= @room.id %>">
+<div class="game-component" data-room-id="<%= @room.id |> String.upcase %>">
 </div>
