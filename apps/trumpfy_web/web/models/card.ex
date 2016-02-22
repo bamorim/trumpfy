@@ -36,3 +36,17 @@ defimpl TrumpfyGame.Card, for: TrumpfyWeb.Card do
   def attribute_value(card,3), do: card.attribute3
   def attribute_value(card,4), do: card.attribute4
 end
+
+defimpl Poison.Encoder, for: TrumpfyWeb.Card do
+  def encode(card, options) do
+    %{
+      id: card.id,
+      name: card.name,
+      attribute1: card.attribute1,
+      attribute2: card.attribute2,
+      attribute3: card.attribute3,
+      attribute4: card.attribute4,
+      image_url: card.image_url
+    } |> Poison.Encoder.encode(options)
+  end
+end

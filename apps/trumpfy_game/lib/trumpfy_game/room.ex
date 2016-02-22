@@ -1,5 +1,5 @@
 defmodule TrumpfyGame.Room do
-  alias TrumpfyGame.Room
+  alias TrumpfyGame.{Room, Game, Player}
 
   defstruct id: nil, game: nil, curr: 0, deck: [], players: []
 
@@ -26,9 +26,43 @@ defmodule TrumpfyGame.Room do
 
   def ready?(room), do: not pending?(room)
 
-  def pending?(room), do: is_nil(room.game) || Game.finished?(room)
+  def pending?(room), do: is_nil(room.game) || Game.finished?(room.game)
 
   def current_player(room), do: room.curr |> Enum.at(room.players)
+
+  def scoped_info(room, player) do
+    player_id = room.players |> Enum.find_index(&(Player.is?(&1, player)))
+
+    hands = room.game && room.game
+    |> Stream.with_index
+    |> Enum.map(fn {cards, i} ->
+      if i == player_id do
+        %{
+          player: room.players |> Enum.at(i),
+          top_card: cards |> List.first,
+          card_count: cards |> Enum.count
+        }
+      else
+        %{
+          player: room.players |> Enum.at(i),
+          card_count: cards |> Enum.count
+        }
+      end
+    end)
+
+    current_player = room.players |> Enum.at(room.curr)
+
+    %{
+      id: room.id,
+      players: room.players,
+      curr: room.curr,
+      current_player: current_player,
+      pending: room |> pending?,
+      hands: hands,
+      your_turn: current_player |> Player.is?(player),
+      your_id: player_id
+    }
+  end
 
   # Helpers
 

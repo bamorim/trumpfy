@@ -4,6 +4,7 @@ defmodule TrumpfyGame.Helpers do
   def make_random_cards(attribute_count, card_count) do
     (1..card_count)
     |> Enum.map( &(make_random_card(&1,attribute_count)) )
+    |> Enum.to_list
   end
 
   def make_random_card(id, attribute_count) do
@@ -16,6 +17,7 @@ defmodule TrumpfyGame.Helpers do
   def make_cards(attribute_count) do
     (1..attribute_count)
     |> Enum.map( &(make_card(&1, attribute_count)) )
+    |> Enum.to_list
   end
 
   def make_card(winning_at, attribute_count) do

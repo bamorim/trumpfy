@@ -1,5 +1,5 @@
 defmodule TrumpfyGame.Game do
-  alias TrumpfyGame.Card
+  alias TrumpfyGame.{Card, Deck}
 
   @moduledoc """
   A game of N players is an array of N hands
@@ -23,7 +23,7 @@ defmodule TrumpfyGame.Game do
   Shuffle the deck and then give them to players
   """
   def new(deck, number_of_players) do
-    deck
+    Deck.cards(deck)
     |> Enum.shuffle
     |> deal(number_of_players)
   end
@@ -31,14 +31,14 @@ defmodule TrumpfyGame.Game do
   @doc """
   Give a already shuffled deck to some players
   """
-  def deal(deck, number_of_players) do
-    cards_per_player = length(deck) |> div(number_of_players)
+  def deal(cards, number_of_players) do
+    cards_per_player = length(cards) |> div(number_of_players)
 
-    deck
+    cards 
     |> Enum.chunk(cards_per_player)
   end
 
-  def finished(game) do
+  def finished?(game) do
     non_empty_hand_count =
       game
       |> Enum.filter( &(length(&1) != 0) )
@@ -48,7 +48,7 @@ defmodule TrumpfyGame.Game do
   end
 
   def winner(game) do
-    if(finished(game)) do
+    if(finished?(game)) do
       game
       |> Stream.with_index
       |> Enum.filter(fn {hand,_i} -> length(hand) > 0 end)

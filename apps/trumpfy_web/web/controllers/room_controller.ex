@@ -1,5 +1,6 @@
 defmodule TrumpfyWeb.RoomController do
   use TrumpfyWeb.Web, :controller
+  alias TrumpfyWeb.Deck
 
   def index(conn, _params) do
     render conn, "index.html"
@@ -12,12 +13,9 @@ defmodule TrumpfyWeb.RoomController do
   end
 
   def create(conn, %{"room" => %{"deck_id" => deck_id}}) do
-    card_query = from c in TrumpfyWeb.Card,
-                 where: c.deck_id == ^deck_id
+    deck = Repo.get!(Deck, deck_id) |> Repo.preload(:cards)
 
-    cards = Repo.all(card_query)
-
-    {:ok, room_id, _pid} = TrumpfyGame.Room.create_room(cards, [])
+    {:ok, room_id, _pid} = TrumpfyGame.Room.create_room(deck, [])
 
     conn
     |> redirect(to: room_path(conn, :show, room_id))

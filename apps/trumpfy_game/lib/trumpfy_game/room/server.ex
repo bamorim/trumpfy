@@ -1,7 +1,7 @@
 defmodule TrumpfyGame.Room.Server do
   use GenServer
 
-  alias TrumpfyGame.{Game, Room}
+  alias TrumpfyGame.{Game, Room, Player}
 
   # Supervisor API
 
@@ -20,13 +20,13 @@ defmodule TrumpfyGame.Room.Server do
     cond do
       Room.pending?(room) ->
         {:reply, {:error, :game_not_ready}, room}
-      Enum.at(room.players, room.curr) != player ->
+      !(player |> Player.is?(Enum.at(room.players, room.curr))) ->
         {:reply, {:error, :not_this_player_turn}, room}
       true ->
         do_play(attribute, room)
     end
   end
-  def handle_call(:get, _from, room), do: room
+  def handle_call(:get, _from, room), do: {:reply, room, room}
   def handle_call(:new_game, _from, room) do
     if Room.pending?(room) do
       nplayers = length(room.players)
@@ -39,8 +39,10 @@ defmodule TrumpfyGame.Room.Server do
     end
   end
   def handle_call({:add_player, player}, _from, room) do
-    players = if room.players |> Enum.member?(player) do
-      room.players
+    player_pos = Enum.find_index(room.players, &(Player.is?(&1,player)))
+    players = if player_pos do
+      # User rejoining, lets update his data
+      room.players |> List.replace_at(player_pos, player)
     else
       room.players ++ [player]
     end

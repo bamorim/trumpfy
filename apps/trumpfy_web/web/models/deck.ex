@@ -27,3 +27,20 @@ defmodule TrumpfyWeb.Deck do
     |> cast(params, @required_fields, @optional_fields)
   end
 end
+
+defimpl TrumpfyGame.Deck, for: TrumpfyWeb.Deck do
+  def cards(deck), do: deck.cards
+end
+
+defimpl Poison.Encoder, for: TrumpfyWeb.Deck do
+  def encode(deck, options) do
+    %{
+      cards: deck.cards,
+      name: deck.name,
+      attribute_name1: deck.attribute_name1,
+      attribute_name2: deck.attribute_name2,
+      attribute_name3: deck.attribute_name3,
+      attribute_name4: deck.attribute_name4
+    }|> Poison.Encoder.encode(options)
+  end
+end
